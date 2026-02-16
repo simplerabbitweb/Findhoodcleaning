@@ -969,9 +969,20 @@
         });
     }
 
+    setupFilter('heroSearch');
     setupFilter('stateFilter');
 
+    // Hero search: scroll to states section and sync filter
     const heroSearch = document.getElementById('heroSearch');
-    heroSearch.addEventListener('input', (e) => {
+    const stateFilter = document.getElementById('stateFilter');
+    if (heroSearch && stateFilter) {
+        heroSearch.addEventListener('input', (e) => {
+            stateFilter.value = e.target.value;
+            if (e.target.value.length > 0) {
+                document.getElementById('states').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+</script>
 </body>
 </html>
