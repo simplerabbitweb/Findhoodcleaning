@@ -224,7 +224,7 @@
         <ul class="nav-links">
             <li><a href="/#states">Browse States</a></li>
             <li><a href="/blog">Resources</a></li>
-            <li><a href="/cdn-cgi/l/email-protection#4f2926212b2720202b2c232a2e212621280f28222e2623612c2022">Contact</a></li>
+            <li><a href="mailto:findhoodcleaning@gmail.com">Contact</a></li>
             <li><a href="/list-your-business" class="nav-cta">List Your Business</a></li>
         </ul>
         <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">
@@ -346,7 +346,7 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
 
-            <p class="form-note">Your listing is free. We'll review your submission and add it within 48 hours. Questions? Email <a href="/cdn-cgi/l/email-protection#c0a6a9aea4a8afafa4a3aca5a1aea9aea780a7ada1a9aceea3afad"><span class="__cf_email__" data-cfemail="65030c0b010d0a0a01060900040b0c0b02250208040c094b060a08">[email&#160;protected]</span></a></p>
+            <p class="form-note">Your listing is free. We'll review your submission and add it within 48 hours. Questions? Email <a href="mailto:findhoodcleaning@gmail.com">findhoodcleaning@gmail.com</a></p>
         </div>
 
         <!-- Success state -->
@@ -365,34 +365,32 @@
     </div>
 </div>
 
-<footer><p>&copy; 2026 <a href="/">findhoodcleaning.com</a>. All rights reserved. &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#197f70777d7176767d7a757c787770777e597e74787075377a7674"><span class="__cf_email__" data-cfemail="d0b6b9beb4b8bfbfb4b3bcb5b1beb9beb790b7bdb1b9bcfeb3bfbd">[email&#160;protected]</span></a> &nbsp;|&nbsp; <a href="/privacy-policy">Privacy Policy</a></p></footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<footer><p>&copy; 2026 <a href="/">findhoodcleaning.com</a>. All rights reserved. &nbsp;|&nbsp; <a href="mailto:findhoodcleaning@gmail.com">findhoodcleaning@gmail.com</a> &nbsp;|&nbsp; <a href="/privacy-policy">Privacy Policy</a></p></footer>
+<script>
     function submitForm() {
-        const btn = document.getElementById('submitBtn');
-        const required = ['bizName', 'contactName', 'phone', 'email', 'address', 'city', 'state'];
-        let valid = true;
+        var btn = document.getElementById('submitBtn');
+        var required = ['bizName', 'contactName', 'phone', 'email', 'address', 'city', 'state'];
+        var valid = true;
 
-        required.forEach(id => {
-            const el = document.getElementById(id);
+        for (var i = 0; i < required.length; i++) {
+            var el = document.getElementById(required[i]);
             if (!el.value.trim()) {
                 el.style.borderColor = '#D64045';
                 valid = false;
             } else {
                 el.style.borderColor = '';
             }
-        });
+        }
 
         if (!valid) return;
 
-        // Gather services
-        const services = [];
-        document.querySelectorAll('input[name="services"]:checked').forEach(cb => {
-            services.push(cb.value);
-        });
+        var services = [];
+        var checkboxes = document.querySelectorAll('input[name="services"]:checked');
+        for (var j = 0; j < checkboxes.length; j++) {
+            services.push(checkboxes[j].value);
+        }
 
-        // Build the form data
-        const formData = {
+        var formData = {
             business_name: document.getElementById('bizName').value,
             contact_name: document.getElementById('contactName').value,
             phone: document.getElementById('phone').value,
@@ -402,18 +400,31 @@
             state: document.getElementById('state').value,
             website: document.getElementById('website').value,
             services: services.join(', '),
-            notes: document.getElementById('notes').value,
+            notes: document.getElementById('notes').value
         };
 
-        // Disable button
         btn.disabled = true;
-        btn.innerHTML = 'Submitting...';
+        btn.textContent = 'Submitting...';
 
-        // Send via mailto fallback (replace with Formspree endpoint when ready)
-        // For now, construct a mailto link with the data
-        const subject = encodeURIComponent('New Listing Request: ' + formData.business_name);
-        const body = encodeURIComponent(
-            'New listing request from FindHoodCleaning.com\n\n' +
-            'Business Name: ' + formData.business_name + '\n' +
-            'Contact: ' + formData.contact_name + '\n' +
-            'Pho
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://formspree.io/f/xwvnojep');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById('formContent').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    window.scrollTo(0, 0);
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = 'Submit Your Listing';
+                    alert('Something went wrong. Please try again or email us at findhoodcleaning@gmail.com');
+                }
+            }
+        };
+        xhr.send(JSON.stringify(formData));
+    }
+</script>
+</body>
+</html>
