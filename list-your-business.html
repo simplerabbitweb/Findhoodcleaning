@@ -224,7 +224,6 @@
         <ul class="nav-links">
             <li><a href="/#states">Browse States</a></li>
             <li><a href="/blog">Resources</a></li>
-            <li><a href="mailto:findhoodcleaning@gmail.com">Contact</a></li>
             <li><a href="/list-your-business" class="nav-cta">List Your Business</a></li>
         </ul>
         <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">
@@ -414,17 +413,4 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     document.getElementById('formContent').style.display = 'none';
-                    document.getElementById('successMessage').style.display = 'block';
-                    window.scrollTo(0, 0);
-                } else {
-                    btn.disabled = false;
-                    btn.textContent = 'Submit Your Listing';
-                    alert('Something went wrong. Please try again or email us at findhoodcleaning@gmail.com');
-                }
-            }
-        };
-        xhr.send(JSON.stringify(formData));
-    }
-</script>
-</body>
-</html>
+                    document.get
