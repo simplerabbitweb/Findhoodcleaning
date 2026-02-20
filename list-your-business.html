@@ -319,21 +319,17 @@
                 <input type="url" id="website" placeholder="https://www.yourcompany.com">
             </div>
 
-            <div class="divider"></div>
-
-            <div class="checkbox-group">
-                <label class="group-label">Services Offered <span class="optional">(select all that apply)</span></label>
-                <div class="checkbox-options">
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Hood Cleaning"> Hood Cleaning</label>
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Exhaust Duct Cleaning"> Exhaust Duct Cleaning</label>
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Exhaust Fan Cleaning"> Exhaust Fan Cleaning</label>
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Grease Trap Cleaning"> Grease Trap Cleaning</label>
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Fire Suppression Service"> Fire Suppression Service</label>
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Filter Service/Replacement"> Filter Service/Replacement</label>
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Pressure Washing"> Pressure Washing</label>
-                    <label class="checkbox-item"><input type="checkbox" name="services" value="Kitchen Deep Cleaning"> Kitchen Deep Cleaning</label>
-                </div>
+            <div class="form-group">
+                <label>Zip Code</label>
+                <input type="text" id="zipcode" placeholder="e.g. 77001" required>
             </div>
+
+            <div class="form-group">
+                <label>Link to Google Business Profile <span class="optional">(optional)</span></label>
+                <input type="url" id="gbp" placeholder="https://www.google.com/maps/place/...">
+            </div>
+
+            <div class="divider"></div>
 
             <div class="form-group">
                 <label>Anything else we should know? <span class="optional">(optional)</span></label>
@@ -345,7 +341,7 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
 
-            <p class="form-note">Your listing is free. We'll review your submission and add it within 48 hours. Questions? Email <a href="mailto:findhoodcleaning@gmail.com">findhoodcleaning@gmail.com</a></p>
+            <p class="form-note">Your listing is free. We'll review your submission and add it within 48 hours. Questions? Email <a href="/cdn-cgi/l/email-protection#d2b4bbbcb6babdbdb6b1beb7b3bcbbbcb592b5bfb3bbbefcb1bdbf"><span class="__cf_email__" data-cfemail="46202f28222e292922252a2327282f282106212b272f2a6825292b">[email&#160;protected]</span></a></p>
         </div>
 
         <!-- Success state -->
@@ -364,11 +360,11 @@
     </div>
 </div>
 
-<footer><p>&copy; 2026 <a href="/">findhoodcleaning.com</a>. All rights reserved. &nbsp;|&nbsp; <a href="mailto:findhoodcleaning@gmail.com">findhoodcleaning@gmail.com</a> &nbsp;|&nbsp; <a href="/privacy-policy">Privacy Policy</a></p></footer>
-<script>
+<footer><p>&copy; 2026 <a href="/">findhoodcleaning.com</a>. All rights reserved. &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#77111e19131f181813141b1216191e191037101a161e1b5914181a"><span class="__cf_email__" data-cfemail="92f4fbfcf6fafdfdf6f1fef7f3fcfbfcf5d2f5fff3fbfebcf1fdff">[email&#160;protected]</span></a> &nbsp;|&nbsp; <a href="/privacy-policy">Privacy Policy</a></p></footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     function submitForm() {
         var btn = document.getElementById('submitBtn');
-        var required = ['bizName', 'contactName', 'phone', 'email', 'address', 'city', 'state'];
+        var required = ['bizName', 'contactName', 'phone', 'email', 'address', 'city', 'state', 'zipcode'];
         var valid = true;
 
         for (var i = 0; i < required.length; i++) {
@@ -383,12 +379,6 @@
 
         if (!valid) return;
 
-        var services = [];
-        var checkboxes = document.querySelectorAll('input[name="services"]:checked');
-        for (var j = 0; j < checkboxes.length; j++) {
-            services.push(checkboxes[j].value);
-        }
-
         var formData = {
             business_name: document.getElementById('bizName').value,
             contact_name: document.getElementById('contactName').value,
@@ -397,8 +387,9 @@
             address: document.getElementById('address').value,
             city: document.getElementById('city').value,
             state: document.getElementById('state').value,
+            zipcode: document.getElementById('zipcode').value,
             website: document.getElementById('website').value,
-            services: services.join(', '),
+            google_business_profile: document.getElementById('gbp').value,
             notes: document.getElementById('notes').value
         };
 
@@ -406,11 +397,4 @@
         btn.textContent = 'Submitting...';
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://formspree.io/f/xwvnojep');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    document.getElementById('formContent').style.display = 'none';
-                    document.get
+        xhr.open('POST',
